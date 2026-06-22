@@ -1,14 +1,14 @@
-# msquic-cloud-server
+# GBR-CC_reciver
 
 This repository contains the cloud-side MsQuic/secnetperf receiver used with the
 GBR-CC sender repository:
 
 ```text
-https://github.com/QiangWu769/msquic_cellular
+https://github.com/QiangWu769/GBR-CC_sender
 ```
 
-Use `msquic-cloud-server` on the remote cloud machine to build and run the
-`secnetperf` server. Use `msquic_cellular` on the phone/host sender side for
+Use `GBR-CC_reciver` on the remote cloud machine to build and run the
+`secnetperf` server. Use `GBR-CC_sender` on the phone/host sender side for
 CellNinjia, DIAG parsing, GBR ratio calculation, and the GBR-CC-enabled
 `secnetperf` client.
 
@@ -17,7 +17,7 @@ CellNinjia, DIAG parsing, GBR ratio calculation, and the GBR-CC-enabled
 ```text
 Android phone + host sender                    Cloud server
 --------------------------------               ------------------------------
-msquic_cellular                                msquic-cloud-server
+GBR-CC_sender                                 GBR-CC_reciver
 
 cellninjia_mobile reads modem DIAG     --->    secnetperf receiver listens
 host parser computes GBR ratio                 on UDP/QUIC port 4433
@@ -33,26 +33,26 @@ for experiments.
 ### 1. Clone and initialize submodules
 
 ```bash
-git clone https://github.com/QiangWu769/msquic-cloud-server.git
-cd msquic-cloud-server
+git clone https://github.com/QiangWu769/GBR-CC_reciver.git
+cd GBR-CC_reciver
 git submodule update --init --recursive
 ```
 
 Existing checkout:
 
 ```bash
-cd /home/qwu26/msquic-cloud-server
+cd /home/qwu26/GBR-CC_reciver
 git submodule sync --recursive
 git submodule update --init --recursive
 ```
 
 ### 2. Build `secnetperf`
 
-Use the same build method as the sender-side `msquic_cellular` repository. Only
+Use the same build method as the sender-side `GBR-CC_sender` repository. Only
 the working directory is different.
 
 ```bash
-cd /home/qwu26/msquic-cloud-server
+cd /home/qwu26/GBR-CC_reciver
 rm -rf build
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Release \
@@ -65,7 +65,7 @@ cmake --build build --target secnetperf -j"$(nproc)"
 Expected binary:
 
 ```text
-/home/qwu26/msquic-cloud-server/build/bin/Release/secnetperf
+/home/qwu26/GBR-CC_reciver/build/bin/Release/secnetperf
 ```
 
 ### 3. Start the cloud receiver
@@ -73,7 +73,7 @@ Expected binary:
 Run this on the cloud server:
 
 ```bash
-cd /home/qwu26/msquic-cloud-server
+cd /home/qwu26/GBR-CC_reciver
 ./build/bin/Release/secnetperf -port:4433 -exec:maxtput -cc:bbr
 ```
 
@@ -87,7 +87,7 @@ If the cloud firewall is enabled, allow UDP port `4433`.
 On the sender machine, use the companion repository:
 
 ```bash
-cd /home/qwu26/msquic_cellular
+cd /home/qwu26/GBR-CC_sender
 ./build/bin/Release/secnetperf \
   -target:<cloud-server-ip> \
   -port:4433 \
@@ -97,7 +97,7 @@ cd /home/qwu26/msquic_cellular
   -cellular:1
 ```
 
-Before running the sender command, `msquic_cellular` should already have:
+Before running the sender command, `GBR-CC_sender` should already have:
 
 1. `cellninjia_mobile` running on the phone.
 2. `adb forward tcp:43555 tcp:43555` configured.
@@ -116,7 +116,7 @@ Typical receiver logs can be redirected from the `secnetperf` server process:
 ```
 
 Phone-side DIAG logs, GBR ratio logs, and sender-side GBR-CC control logs belong
-to the companion `msquic_cellular` repository.
+to the companion `GBR-CC_sender` repository.
 
 ## Main Files
 
