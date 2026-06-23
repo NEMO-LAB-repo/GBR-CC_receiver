@@ -135,19 +135,6 @@ Before running the sender command, `GBR-CC_sender` should already have:
    - `tools/cellninjia/diag_get_lte_msquic.py`, or
    - `tools/cellninjia/diag_get_5g_msquic.py`.
 
-## Logging Notes
-
-This repository keeps the cloud-side MsQuic/BBR logging and analysis utilities.
-Typical receiver logs can be redirected from the `secnetperf` server process:
-
-```bash
-./build/bin/Release/secnetperf -port:4433 -exec:maxtput -cc:bbr \
-  > server_secnetperf.log 2>&1
-```
-
-Phone-side DIAG logs, GBR ratio logs, and sender-side GBR-CC control logs belong
-to the companion `GBR-CC_sender` repository.
-
 ## Main Files
 
 - `src/perf/lib/SecNetPerfMain.cpp`: `secnetperf` command-line entry point.
