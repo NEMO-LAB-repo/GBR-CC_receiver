@@ -8,7 +8,7 @@ This repository contains the cloud-side MsQuic/secnetperf receiver used with the
 GBR-CC sender repository:
 
 ```text
-https://github.com/QiangWu769/GBR-CC_sender
+https://github.com/NEMO-LAB-repo/GBR-CC_sender
 ```
 
 Use `GBR-CC_receiver` on the remote cloud machine to build and run the
@@ -37,7 +37,7 @@ for experiments.
 ### 1. Clone and initialize submodules
 
 ```bash
-git clone https://github.com/QiangWu769/GBR-CC_receiver.git
+git clone https://github.com/NEMO-LAB-repo/GBR-CC_receiver.git
 cd GBR-CC_receiver
 git submodule update --init --recursive
 ```
