@@ -11,6 +11,32 @@ GBR-CC sender repository:
 https://github.com/NEMO-LAB-repo/GBR-CC_sender
 ```
 
+## Project Architecture
+
+```text
+GBR-CC_sender
+    -> QUIC uplink upload
+    -> GBR-CC_receiver cloud server
+    -> secnetperf receiver
+    -> receiver-side logs and analysis
+```
+
+```text
+GBR-CC_receiver
++-- src/perf/
+|   +-- secnetperf receiver entry point and experiment logging
++-- src/core/
+|   +-- MsQuic congestion-control code used by the receiver build
++-- scripts/
+|   +-- Build and run helpers
++-- analysis/
+|   +-- Receiver-side log analysis utilities
++-- cmake/
+|   +-- MsQuic build configuration
++-- submodules/
+    +-- Third-party dependencies used by MsQuic
+```
+
 Use `GBR-CC_receiver` on the remote cloud machine to build and run the
 `secnetperf` server. Use `GBR-CC_sender` on the phone/host sender side for
 CellNinjia, DIAG parsing, GBR ratio calculation, and the GBR-CC-enabled
