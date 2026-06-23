@@ -1,4 +1,4 @@
-# GBR-CC_reciver
+# GBR-CC_receiver
 
 This repository is part of the artifact for the SIGCOMM 2026 paper
 **"Synchronizing with the Scheduler: Dual-Loop Congestion Control for 5G Uplink
@@ -11,7 +11,7 @@ GBR-CC sender repository:
 https://github.com/QiangWu769/GBR-CC_sender
 ```
 
-Use `GBR-CC_reciver` on the remote cloud machine to build and run the
+Use `GBR-CC_receiver` on the remote cloud machine to build and run the
 `secnetperf` server. Use `GBR-CC_sender` on the phone/host sender side for
 CellNinjia, DIAG parsing, GBR ratio calculation, and the GBR-CC-enabled
 `secnetperf` client.
@@ -21,7 +21,7 @@ CellNinjia, DIAG parsing, GBR ratio calculation, and the GBR-CC-enabled
 ```text
 Android phone + host sender                    Cloud server
 --------------------------------               ------------------------------
-GBR-CC_sender                                 GBR-CC_reciver
+GBR-CC_sender                                 GBR-CC_receiver
 
 cellninjia_mobile reads modem DIAG     --->    secnetperf receiver listens
 host parser computes GBR ratio                 on UDP/QUIC port 4433
@@ -37,15 +37,15 @@ for experiments.
 ### 1. Clone and initialize submodules
 
 ```bash
-git clone https://github.com/QiangWu769/GBR-CC_reciver.git
-cd GBR-CC_reciver
+git clone https://github.com/QiangWu769/GBR-CC_receiver.git
+cd GBR-CC_receiver
 git submodule update --init --recursive
 ```
 
 Existing checkout:
 
 ```bash
-cd /home/qwu26/GBR-CC_reciver
+cd /home/qwu26/GBR-CC_receiver
 git submodule sync --recursive
 git submodule update --init --recursive
 ```
@@ -56,7 +56,7 @@ Use the same build method as the sender-side `GBR-CC_sender` repository. Only
 the working directory is different.
 
 ```bash
-cd /home/qwu26/GBR-CC_reciver
+cd /home/qwu26/GBR-CC_receiver
 rm -rf build
 cmake -S . -B build \
   -DCMAKE_BUILD_TYPE=Release \
@@ -69,7 +69,7 @@ cmake --build build --target secnetperf -j"$(nproc)"
 Expected binary:
 
 ```text
-/home/qwu26/GBR-CC_reciver/build/bin/Release/secnetperf
+/home/qwu26/GBR-CC_receiver/build/bin/Release/secnetperf
 ```
 
 ### 3. Start the cloud receiver
@@ -77,7 +77,7 @@ Expected binary:
 Run this on the cloud server:
 
 ```bash
-cd /home/qwu26/GBR-CC_reciver
+cd /home/qwu26/GBR-CC_receiver
 ./build/bin/Release/secnetperf -port:4433 -exec:maxtput -cc:bbr
 ```
 
